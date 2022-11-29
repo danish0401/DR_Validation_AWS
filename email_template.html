@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+   <body>
+      <div id="email" style="width:1000px;margin: auto;background:white;">
+         <!--  Email Title --> 
+         <table role="presentation" border="0" width="100%" cellspacing="0">
+            <tr>
+               <td style="padding: 30px 30px 30px 60px;">
+                  <h2 style="font-size: 28px; margin:0 0 20px 0; font-family:Arial, Helvetica, sans-serif;"> Elastic Load Balancer Differences </h2>
+                  <p style="margin:0 0 0px 0;font-size:16px;line-height:24px;font-family:Arial"> Below  you can find a list of  load balancers with differences in  Attributes, Listerners and Target Groups .</p>
+               </td>
+            </tr>
+         </table>
+         <!-- single start -->
+         <table role="presentation" border="0" width="100%">
+            <tr align="center">
+               <!-- Attributes Differences  -->
+               <td style="vertical-align:top;">
+                  <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                     <tr>
+                        <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                           <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Attributes Differences </h2>
+                        </td>
+                     </tr>
+                  </table>
+                  <table role="presentation" border="0" width="100%" cellspacing="0">
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6">
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary ELB</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary ELB </h2>
+                        </td>
+                     </tr>
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6">
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Health Check   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                        </td>
+                     </tr>
+                     <!-- values row -->
+                  </table>
+               </td>
+               <!-- Attributes Differences ends  -->
+
+               <!-- Listeners Differences  -->
+               <td style="vertical-align:top;">
+                  <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                     <tr>
+                        <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                           <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Listeners Differences </h2>
+                        </td>
+                     </tr>
+                  </table>
+                  <table role="presentation" border="0" width="100%" cellspacing="0">
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6">
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Property Name</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary ELB</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary ELB </h2>
+                        </td>
+                     </tr>
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6" >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Health Check   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                        </td>
+                     </tr>
+                     <!-- values row -->
+                  </table>
+               </td>
+               <!-- Listeners Differences  end-->
+
+               <!-- Target Groups Differences -->
+               <td style="vertical-align:top;">
+                  <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                     <tr>
+                        <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                           <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Target Groups Differences </h2>
+                        </td>
+                     </tr>
+                  </table>
+                  <table role="presentation" border="0" width="100%" cellspacing="0">
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6">
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Property Name</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary ELB</h2>
+                        </td>
+                        <td >
+                           <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary ELB </h2>
+                        </td>
+                     </tr>
+                     <tr align="center">
+                        <td bgcolor="#EAF0F6">
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Health Check   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                        </td>
+                        <td >
+                           <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                        </td>
+                     </tr>
+                     <!-- values row -->
+                  </table>
+               </td>
+               <!-- Target Groups Differences end -->
+            </tr>
+
+
+    
+
+         </table>
+
+        <!--second row for security groups differences -->
+         <table role="presentation" border="0" width="100%">
+
+          <tr  align="center" >
+            <td  style="vertical-align:top; " >
+               <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                  <tr>
+                     <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                        <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Ingress Security Groups Differencex` </h2>
+                     </td>
+                  </tr>
+               </table>
+
+               <table role="presentation" border="0" width="100%" cellspacing="0">
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary Sec Group</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary Sec Group </h2>
+                     </td>
+                  </tr>
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Protocol   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                     </td>
+                  </tr>
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Port   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                     </td>
+                  </tr>
+                  <!-- values row -->
+               </table>
+            </td>
+
+            <td  style="vertical-align:top;" >
+               <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                  <tr>
+                     <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                        <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Egress Security Groups Difference </h2>
+                     </td>
+                  </tr>
+               </table>
+
+               <table role="presentation" border="0" width="100%" cellspacing="0">
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary Sec Group</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary Sec Group </h2>
+                     </td>
+                  </tr>
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Protocol   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                     </td>
+                  </tr>
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Port   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                     </td>
+                     <td >
+                        <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                     </td>
+                  </tr>
+                  <!-- values row -->
+               </table>
+            </td>
+            <td  style="vertical-align:top;" >
+               <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                  <tr>
+                     <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                        <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> ALB Certificate Difference </h2>
+                     </td>
+                  </tr>
+               </table>
+
+               <table role="presentation" border="0" width="100%" cellspacing="0">
+                  <tr align="center">
+                     <td bgcolor="#EAF0F6">
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary Sec Group</h2>
+                     </td>
+                     <td >
+                        <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary Sec Group </h2>
+                     </td>
+                  </tr>
+ 
+                  <!-- values row -->
+               </table>
+            </td>
+
+         </tr>
+      </table>
+
+
+      <!-- New Table 3 -->
+      <table role="presentation" border="0" width="50%">
+
+         <tr  align="center" >
+           <td  style="vertical-align:top; " >
+              <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+                 <tr>
+                    <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                       <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Route53 RecordName Difference </h2>
+                    </td>
+                 </tr>
+              </table>
+
+              <table role="presentation" border="0" width="100%" cellspacing="0">
+                 <tr align="center">
+                    <td bgcolor="#EAF0F6">
+                       <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+                    </td>
+                    <td >
+                       <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary Sec Group</h2>
+                    </td>
+                    <td >
+                       <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary Sec Group </h2>
+                    </td>
+                 </tr>
+                 <tr align="center">
+                    <td bgcolor="#EAF0F6">
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Protocol   </p>
+                    </td>
+                    <td >
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                    </td>
+                    <td >
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                    </td>
+                 </tr>
+                 <tr align="center">
+                    <td bgcolor="#EAF0F6">
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Port   </p>
+                    </td>
+                    <td >
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active   </p>
+                    </td>
+                    <td >
+                       <p style="margin:0 0 12px 0;font-size:12px;line-height:24px;font-family:Arial">Active  </p>
+                    </td>
+                 </tr>
+                 <!-- values row -->
+              </table>
+           </td>
+
+
+        </tr>
+     </table>
+
+            <table   role="presentation" border="0" width="100%">
+
+            <!-- third row for arns -->
+            <tr>
+               <td colspan="3">
+                  <table role="presentation" border="0" width="100%">
+                     <tr>
+                        <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                           <p style="font-size: 13px; margin:0 0 0px 0; "> <b>Primary ARN: </b> arn:aws:elasticloadbalancing:us-east-2:489994096722:loadbalancer/app/Web-ELB-elb-task-with-lambda/bd2838f08ce6d619 </p>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+                           <p style="font-size: 13px; margin:0 0 0px 0; "><b>Secondary ARN:</b> arn:aws:elasticloadbalancing:us-east-2:489994096722:loadbalancer/app/Web-ELB-elb-task-with-lambda/bd2838f08ce6d619 </p>
+                        </td>
+                     </tr>
+                  </table>
+               </td>
+            </tr>
+            </table>
+         <!-- single ends -->
+         <hr>
+         <!-- Footer --> 
+         <table role="presentation" border="0" width="100%">
+            <tr>
+               <td bgcolor="#EAF0F6" align="center" style="padding: 30px 30px;">
+                  <h2 style="font-size: 20px; margin:0 0 20px 0; font-family:Arial, Helvetica, sans-serif;"> Total Load Balancers : 4 </h2>
+                  <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial">These are the number of load balancers tagged with  <br>
+                     <code  style="font-size: 13px;">enable : true </code><br> 
+                     <code  style="font-size: 13px;">isPrimary : true</code> <br>
+                     <code  style="font-size: 13px;">secondaryARN : ARN</code> 
+                  </p>
+               </td>
+            </tr>
+         </table>
+
+      </div>
+   </body>
+</html>
+
+<td  style="vertical-align:top;" >
+   <table role="presentation" border="0" width="100%" style="margin-left: -5px; margin-bottom: -3px; width: 105%;">
+      <tr>
+         <td bgcolor="#EAF0F6" align="center" style="padding: 15px 15px;">
+            <h2 style="font-size: 15px; margin:0 0 0px 0; font-family:Arial, Helvetica, sans-serif;"> Egress Security Groups Diff </h2>
+         </td>
+      </tr>
+   </table>
+
+   <!-- <table role="presentation" border="0" width="100%" cellspacing="0">
+      <tr align="center">
+         <td bgcolor="#EAF0F6">
+            <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Attribute Name</h2>
+         </td>
+         <td >
+            <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Primary Sec Group</h2>
+         </td>
+         <td >
+            <h2 style="font-size: 13px;  font-family:Arial, Helvetica, sans-serif;"> Secondary Sec Group </h2>
+         </td>
+      </tr>
+
+      <!-- values row -->
+   </table>
+</td> -->

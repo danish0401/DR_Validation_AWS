@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "Danish-Sam"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-xg08sfanlri1"
+s3_prefix = "Danish-Sam"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

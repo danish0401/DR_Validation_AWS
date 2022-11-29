@@ -1,0 +1,152 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An example SAM template for a Lambda function that's invoked by a CloudWatch Event.
+
+Resources:
+  ELBDifference:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: FindELBDifference
+      Handler: find_elb_difference.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./handlers
+ 
+      Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+          Variables:
+            PRIMARY_REGION: us-west-2
+            SECONDARY_REGION: us-east-1
+            SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:SendELBDifferenceEmail
+            slack_token: slack_token_id
+            SECRET_NAME: slack_token_secret
+            DYNAMODB_TABLE: lambda_Save_Response_Table
+            R53Table_Name: route_53_data
+
+      Policies:
+            - Statement:
+              - Sid: ElbPolicy
+                Effect: Allow
+                Action:
+                - elasticloadbalancing:DescribeLoadBalancers
+                - elasticloadbalancing:DescribeAccountAttributes
+                - elasticloadbalancing:DescribeTags
+                - elasticloadbalancing:DescribeLoadBalancerAttributes
+                - elasticloadbalancing:DescribeListeners
+                - elasticloadbalancing:DescribeTargetGroups
+                - elasticloadbalancing:DescribeListenerCertificates
+                - secretsmanager:GetSecretValue
+                - ec2:DescribeSecurityGroups
+                - cloudwatch:*
+                - dynamodb:*
+                Resource: '*'
+
+            - Statement:
+              - Sid: lambdaPolicy
+                Effect: Allow
+                Action:
+                - lambda:InvokeFunction 
+                Resource: '*'
+
+            - Statement:
+              - Sid: acmPolicy
+                Effect: Allow
+                Action:
+                - acm:GetCertificate
+                - acm:DescribeCertificate
+                Resource: '*'
+
+
+  SendELBDifferenceEmail:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: SendELBDifferenceEmail
+      Handler: send_email.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./handlers
+ 
+      Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+          Variables:
+            SOURCE_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
+            DESTINATION_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
+            DYNAMODB_TABLE: lambda_Save_Response_Table
+
+      Policies:
+            - Statement:
+              - Sid: SESPolicy
+                Effect: Allow
+                Action:
+                - ses:SendEmail 
+                - ses:SendRawEmail
+                - dynamodb:*
+                Resource: '*'
+        
+      Events:
+        MyCloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0/2 * ? * * *)
+
+  SendALBARNs:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: SendALBARNs
+      Handler: get_ALB_ARNs.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./handlers
+ 
+      Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+          Variables:
+            PRIMARY_REGION: us-west-2
+            SECONDARY_REGION: us-east-1
+            SEND_ARN_BATCH_LIST: arn:aws:lambda:us-east-1:489994096722:function:FindELBDifference
+            CHUNK_SIZE: 1
+
+      Policies:
+            - Statement:
+              - Sid: lambdaPolicy
+                Effect: Allow
+                Action:
+                - lambda:InvokeFunction 
+                Resource: '*'
+            - Statement:
+              - Sid: ElbPolicy
+                Effect: Allow
+                Action:
+                - elasticloadbalancing:DescribeLoadBalancers
+                - elasticloadbalancing:DescribeAccountAttributes
+                - elasticloadbalancing:DescribeTags
+                - elasticloadbalancing:DescribeLoadBalancerAttributes
+                - elasticloadbalancing:DescribeListeners
+                - elasticloadbalancing:DescribeTargetGroups
+                - elasticloadbalancing:DescribeListenerCertificates
+                - secretsmanager:GetSecretValue
+                - ec2:DescribeSecurityGroups
+                - cloudwatch:*
+                - dynamodb:*
+                Resource: '*'
+
+  GetRoute53Record:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: GetRoute53Record
+      Handler: get_route53_records.lambda_handler
+      Runtime: python3.8
+      CodeUri: ./handlers
+ 
+      Description: A function that is invoked by a CloudWatch Event and scan route 53 filter data and store it in dynamodb table.
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+          Variables:
+            TableName: route_53_data
+
+      Policies:
+            - Statement:
+              - Sid: ElbPolicy
+                Effect: Allow
+                Action:
+                - cloudwatch:*
+                - dynamodb:*
+                - route53:*
+
+                Resource: '*'
