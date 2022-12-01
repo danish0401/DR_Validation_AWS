@@ -15,7 +15,7 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
           Variables:
             PRIMARY_REGION: us-west-2
-            SECONDARY_REGION: us-east-1
+            SECONDARY_REGION: us-east-2
             SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:SendELBDifferenceEmail
             slack_token: slack_token_id
             SECRET_NAME: slack_token_secret
@@ -70,6 +70,7 @@ Resources:
             SOURCE_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
             DESTINATION_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
             DYNAMODB_TABLE: lambda_Save_Response_Table
+            ReportS3BucketName: elb-difference-email-test1
 
       Policies:
             - Statement:
@@ -79,6 +80,7 @@ Resources:
                 - ses:SendEmail 
                 - ses:SendRawEmail
                 - dynamodb:*
+                - s3:*
                 Resource: '*'
         
       Events:
@@ -150,3 +152,30 @@ Resources:
                 - route53:*
 
                 Resource: '*'
+  
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: elb-difference-email-test1
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+    # DeletionPolicy: Retain
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref S3Bucket
+                - /*
+      Bucket: !Ref S3Bucket

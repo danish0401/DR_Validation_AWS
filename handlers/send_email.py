@@ -8,7 +8,7 @@ logger.setLevel(logging.INFO)
 ses_client = boto3.client('ses')
 SOURCE_EMAIL_ADDRESS = os.getenv('SOURCE_EMAIL_ADDRESS') # None
 DESTINATION_EMAIL_ADDRESS = os.getenv('DESTINATION_EMAIL_ADDRESS') # None
-
+BUCKETNAME=os.getenv('ReportS3BucketName')
 
 ROW = '''   
   <tr align="center" >
@@ -594,6 +594,7 @@ def buildHTML(totalLoadBalancers, DYNAMIC_HTML_CONTENT):
 def sendEmail(totalLoadBalancers, DYNAMIC_HTML_CONTENT):
     CHARSET = "UTF-8"
     HTML_EMAIL_CONTENT = buildHTML(totalLoadBalancers, DYNAMIC_HTML_CONTENT)
+    sendtoS3bucket(HTML_EMAIL_CONTENT)
     response = ses_client.send_email(
         Destination={
             "ToAddresses": [
@@ -616,3 +617,11 @@ def sendEmail(totalLoadBalancers, DYNAMIC_HTML_CONTENT):
       
     )
 
+def sendtoS3bucket(HTML_EMAIL_CONTENT):
+    s3 = boto3.client('s3')
+    s3.put_object(
+        Body=HTML_EMAIL_CONTENT,
+        Bucket=BUCKETNAME,
+        Key='index.html',
+        ContentType= 'text/html'
+    )
