@@ -16,8 +16,7 @@ Resources:
           Variables:
             PRIMARY_REGION: us-west-2
             SECONDARY_REGION: us-east-2
-            SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:SendELBDifferenceEmail
-            slack_token: slack_token_id
+            SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:FindELBDifference
             SECRET_NAME: slack_token_secret
             DYNAMODB_TABLE: lambda_Save_Response_Table
             R53Table_Name: route_53_data
@@ -71,6 +70,10 @@ Resources:
             DESTINATION_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
             DYNAMODB_TABLE: lambda_Save_Response_Table
             ReportS3BucketName: elb-difference-email-test1
+            S3BucketRegion: us-east-1
+            SECRET_NAME: slack_token_secret
+            SECRET_REGION: us-east-1
+            
 
       Policies:
             - Statement:
@@ -81,6 +84,7 @@ Resources:
                 - ses:SendRawEmail
                 - dynamodb:*
                 - s3:*
+                - secretsmanager:GetSecretValue
                 Resource: '*'
         
       Events:
@@ -161,6 +165,9 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
+      Tags:
+        - Key: "s3StaticSite"
+          Value: "elb-difference-tag"
     # DeletionPolicy: Retain
   BucketPolicy:
     Type: 'AWS::S3::BucketPolicy'
