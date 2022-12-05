@@ -2,6 +2,8 @@ import json
 import boto3
 import logging
 import os
+import base64
+from slack_sdk import WebClient
 lambda_client = boto3.client('lambda')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -9,6 +11,9 @@ ses_client = boto3.client('ses')
 SOURCE_EMAIL_ADDRESS = os.getenv('SOURCE_EMAIL_ADDRESS') # None
 DESTINATION_EMAIL_ADDRESS = os.getenv('DESTINATION_EMAIL_ADDRESS') # None
 BUCKETNAME=os.getenv('ReportS3BucketName')
+BUCKETREGION=os.getenv('S3BucketRegion')
+SECRET_NAME=os.getenv('SECRET_NAME')
+SECRET_REGION=os.getenv('SECRET_REGION')
 
 ROW = '''   
   <tr align="center" >
@@ -70,7 +75,7 @@ def lambda_handler(event, context):
           print("Email Sent ...")
        else:
            print("No Difference Found, Could Not Sent Email ...")
-        
+       
        return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
@@ -78,7 +83,28 @@ def lambda_handler(event, context):
         
     except Exception as e:
         print(e)
-        
+
+def getSecret():
+    session = boto3.session.Session()
+    client = session.client(
+        service_name='secretsmanager',
+        region_name=SECRET_REGION )
+    get_secret_value_response = client.get_secret_value(
+            SecretId=SECRET_NAME )
+    if 'SecretString' in  get_secret_value_response:
+        secret = get_secret_value_response['SecretString']
+        return secret
+    else:
+        decode_binary_secret = base64.b64decode(get_secret_value_response['SecretBinary'])
+        return decode_binary_secret
+
+def get_endpoint_for_s3_bucket(bucket_name, region):
+	parts=["s3-website",region]
+	url_site = "-".join(parts)
+	url_postfix = "amazonaws.com"
+	url = "{bucket_name}.{url_site}.{url_postfix}".format(bucket_name=bucket_name, url_site=url_site, url_postfix=url_postfix)
+	return url
+
 def deletedataonTable(table, items):
    for item in items:
       key=item["id"]
@@ -595,6 +621,12 @@ def sendEmail(totalLoadBalancers, DYNAMIC_HTML_CONTENT):
     CHARSET = "UTF-8"
     HTML_EMAIL_CONTENT = buildHTML(totalLoadBalancers, DYNAMIC_HTML_CONTENT)
     sendtoS3bucket(HTML_EMAIL_CONTENT)
+    url=get_endpoint_for_s3_bucket(BUCKETNAME, BUCKETREGION)
+    print("url:",url)
+    slack_token=getSecret()
+    slackclient = WebClient(token= slack_token)
+    slackclient.chat_postMessage(channel="#s3-url-test", text="S3-URL:"+str(url))
+
     response = ses_client.send_email(
         Destination={
             "ToAddresses": [
