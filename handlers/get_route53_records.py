@@ -69,10 +69,10 @@ def put_items(List_Resource_record_sets,table):
     
 def deletedataonTable(table):
    result = table.scan()
-   if "items" in result:
-    for item in result["items"]:
+   if "Items" in result:
+    for item in result["Items"]:
         key=item["id"]
-        print("Key:",key)
+        # print("Key:",key)
         table.delete_item(
                         Key={
                             'id': key

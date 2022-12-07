@@ -10,14 +10,13 @@ Resources:
       Handler: find_elb_difference.lambda_handler
       Runtime: python3.8
       CodeUri: ./handlers
- 
+      Timeout: 180
       Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
           Variables:
             PRIMARY_REGION: us-west-2
-            SECONDARY_REGION: us-east-1
-            SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:SendELBDifferenceEmail
-            slack_token: slack_token_id
+            SECONDARY_REGION: us-east-2
+            SEND_EMAIL_FUNCTION: arn:aws:lambda:us-east-1:489994096722:function:FindELBDifference
             SECRET_NAME: slack_token_secret
             DYNAMODB_TABLE: lambda_Save_Response_Table
             R53Table_Name: route_53_data
@@ -63,13 +62,18 @@ Resources:
       Handler: send_email.lambda_handler
       Runtime: python3.8
       CodeUri: ./handlers
- 
+      Timeout: 180
       Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
           Variables:
             SOURCE_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
             DESTINATION_EMAIL_ADDRESS: akbar.alam@eurustechnologies.com
             DYNAMODB_TABLE: lambda_Save_Response_Table
+            ReportS3BucketName: elb-difference-email-test
+            S3BucketRegion: us-east-1
+            SECRET_NAME: slack_token_secret
+            SECRET_REGION: us-east-1
+            
 
       Policies:
             - Statement:
@@ -79,6 +83,8 @@ Resources:
                 - ses:SendEmail 
                 - ses:SendRawEmail
                 - dynamodb:*
+                - s3:*
+                - secretsmanager:GetSecretValue
                 Resource: '*'
         
       Events:
@@ -94,7 +100,7 @@ Resources:
       Handler: get_ALB_ARNs.lambda_handler
       Runtime: python3.8
       CodeUri: ./handlers
- 
+      Timeout: 180
       Description: A function that is invoked by a CloudWatch Event and find difference in ELBs.
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
           Variables:
@@ -134,7 +140,7 @@ Resources:
       Handler: get_route53_records.lambda_handler
       Runtime: python3.8
       CodeUri: ./handlers
- 
+      Timeout: 300
       Description: A function that is invoked by a CloudWatch Event and scan route 53 filter data and store it in dynamodb table.
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
           Variables:
@@ -150,3 +156,63 @@ Resources:
                 - route53:*
 
                 Resource: '*'
+  
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: elb-difference-email-test
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+      Tags:
+        - Key: "s3StaticSite"
+          Value: "elb-difference-tag"
+    # DeletionPolicy: Retain
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref S3Bucket
+                - /*
+      Bucket: !Ref S3Bucket
+
+  MyDynamoDBTable1:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: lambda_Save_Response_Table
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: 0
+        WriteCapacityUnits: 0
+
+  MyDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: route_53_data
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput:
+        ReadCapacityUnits: 0
+        WriteCapacityUnits: 0
