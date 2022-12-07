@@ -2,7 +2,7 @@ name: SAM build deploy.
 on:
   push:
     branches:
-      - S3-test
+      - sam-build-workflow
 jobs:
   build-deploy-sam:
     runs-on: ubuntu-latest
