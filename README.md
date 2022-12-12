@@ -1,7 +1,6 @@
-# Disaster Recovery For AWS
+# Disaster Recovery Validation For AWS
 
-## What is Disaster Recovery:
-An organization's capacity to respond to and recover from a situation that adversely impacts business operations is known as disaster recovery (DR). The objective of DR techniques is to make it feasible for the organisation to quickly resume using its vital IT infrastructure and systems following a disaster. Organizations frequently conduct a thorough review of their systems in advance of this and produce a formal document that should be followed in a crisis. A disaster recovery plan is what is known as this document.
+The objective of DR Validation is to make it feasible for the organisation to quickly resume using its vital IT infrastructure and systems following a disaster.
 
 ## Primary/Secondary Region Based DR Strategy:
 The workload operates from a single site (in this case an AWS Region) and all requests are handled from this Primary Region. If a disaster event occurs and the Primary Region cannot support workload operation, then the Secondary site becomes the recovery site (recovery Region). We then take steps so that our workload can run from there. All requests are now switched to be routed there in a process called “failover.”
