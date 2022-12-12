@@ -5,7 +5,7 @@ The objective of DR Validation is to make it feasible for the organisation to qu
 ## Primary/Secondary Region Based DR Strategy:
 The workload operates from a single site (in this case an AWS Region) and all requests are handled from this Primary Region. If a disaster event occurs and the Primary Region cannot support workload operation, then the Secondary site becomes the recovery site (recovery Region). We then take steps so that our workload can run from there. All requests are now switched to be routed there in a process called “failover.”
 
-![alt text for screen readers](./images/dr.png ) 
+
 
 Disaster Recovery involves replication of many services from primary region to secondary like Elastic Load Balancers, RDS, Auto Scaling Groups etc.
 
@@ -41,7 +41,11 @@ This application consist of four lambda functions that has different functionali
 - SendALBARNs
 - FindELBDifference
 - SendELBDifferenceEmail
+
+
+![alt text for screen readers](./images/lambda.png "lambda")
  
+
 #### GetRoute53Record:
 This lambda functions scans route 53 hosted zones and filter out the zone ID and search for records in that zone ID extract all A type records (elb dns only) and put them into a dynamodb table.
 
