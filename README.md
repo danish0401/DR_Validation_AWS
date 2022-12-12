@@ -43,7 +43,7 @@ This application consist of four lambda functions that has different functionali
 - SendELBDifferenceEmail
 
 
-![alt text for screen readers](./images/lambda.png "lambda")
+![alt text for screen readers](./images/lambda.jpg "lambda")
  
 
 #### GetRoute53Record:
